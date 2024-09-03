@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
     else {
       Alert.alert('Error', 'Invalid email or password');
     }
-    navigation.navigate('Home');
+    navigation.navigate('Register');
   };
 
   return (
