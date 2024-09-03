@@ -19,7 +19,7 @@ const RegisterScreen=({navigation})=>{
       Alert.alert('Error', 'Please enter both email and password');
       return;
     }else{
-       // navigation.navigate('Login');
+      navigation.navigate('Home');
     }
   }
 

@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ValidateEmail from '../validate/emailValidate';
-import ValidatePassword  from "../validate/passwordValidate";
+import ValidatePassword from '../validate/passwordValidate';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
-  const isValidEmail=ValidateEmail(email);
-  const isValidPassword=ValidatePassword(password);
+  const isValidEmail = ValidateEmail(email);
+  const isValidPassword = ValidatePassword(password);
 
   const handleLogin = () => {
     if (email === '' || password === '') {
@@ -17,12 +18,15 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    // Simulate a login process
-    
-    else {
+    if (!isValidEmail || !isValidPassword) {
       Alert.alert('Error', 'Invalid email or password');
+      return;
     }
-    navigation.navigate('Register');
+
+    // Simulate a login process
+    // For example, you might want to make an API call here
+    // If the login is successful, navigate to the Home screen
+    navigation.navigate('Home');
   };
 
   return (
@@ -43,12 +47,20 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} 
-      disabled={!isValidEmail || !isValidPassword}/>
+      <Button
+        title="Login"
+        onPress={handleLogin}
+        disabled={!isValidEmail || !isValidPassword}
+      /><br/>
+      
+      <Button
+        style={styles.registerBtn}
+        title="Don't have an account? Click here"
+        onPress={() => navigation.navigate('Register')}
+      />
     </View>
-  );  
-
-  }
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -68,7 +80,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
   },
+  registerBtn:{
+    backgroundColor:'red'
+  }
 });
-
 
 export default LoginScreen;
