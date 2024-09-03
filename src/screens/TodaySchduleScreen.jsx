@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { CheckBox, Text, StyleSheet, View, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { CheckBox, ScrollView, Text, StyleSheet, View, FlatList } from 'react-native';
 
 const TodaySchduleScreen = () => {
-  const [numOfcompletedTask,setNumOfCompletedTask]=useState(0);
+  const [numOfCompletedTask, setNumOfCompletedTask] = useState(0);
   const [data, setData] = useState([
     { id: '1', name: 'Item 1', description: 'Wake Up', time: '05:00', isSelected: false },
     { id: '2', name: 'Item 2', description: 'Wake Up', time: '05:30', isSelected: false },
@@ -14,17 +14,18 @@ const TodaySchduleScreen = () => {
   const handleCheckBoxChange = (id) => {
     setData(prevData =>
       prevData.map(item =>
-        item.id === id ? { ...item, isSelected: !item.isSelected } : item,
+        item.id === id ? { ...item, isSelected: !item.isSelected } : item
       )
     );
-    setNumOfCompletedTask(prevNum => {
-      const item = data.find(item => item.id === id);
-      return item.isSelected ? prevNum -1 : prevNum+1;
-    });
-   
   };
 
-  console.log(data.length);
+  useEffect(() => {
+    const completedTasks = data.filter(item => item.isSelected).length;
+    setNumOfCompletedTask(completedTasks);
+  }, [data]);
+
+  // For pie chart
+
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.itemText}>{item.time} - {item.description}</Text>
@@ -39,16 +40,18 @@ const TodaySchduleScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Today's Schedule Screen</Text>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        style={styles.list}
-      />
-      <Text>You're completed:{numOfcompletedTask}/{(data.length)}</Text>
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Today's Schedule Screen</Text>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          style={styles.list}
+        />
+        <Text>You're completed: {numOfCompletedTask}/{data.length}</Text>
+      </View>
+    </ScrollView>
   );
 };
 
