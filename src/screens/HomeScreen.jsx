@@ -1,15 +1,17 @@
-import React,{useState} from 'react';
+import React,{useState,useNavigation} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 
-const HomeScreen = () => {
+const HomeScreen =({navigation}) => {
   const [date, setDate] = useState(dayjs());
-
+  //const navigation = useNavigation();
   const handleDate=(params)=>{
       setDate(params.date);
       console.log(params.date);
+      navigation.navigate("TodaySchduleScreen")
     }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text><br/>

@@ -5,14 +5,15 @@ import ValidateEmail from '../validate/emailValidate';
 import ValidatePassword  from "../validate/passwordValidate";
 import ValidateUsername from '../validate/usernameValidate';
 
-const RegisterScreen=({navigation})=>{
+const RegisterScreen=()=>{
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username,setUserName]=useState('');
 
   const isValidEmail=ValidateEmail(email);
   const isValidPassword=ValidatePassword(password);
-  const isValidateUsername=ValidateUsername(username)
+  const isValidateUsername=ValidateUsername(username);
+  const navigation = useNavigation();
 
   const handleRegister = () => {
     if (email === '' || password === ''|| username==='') {
