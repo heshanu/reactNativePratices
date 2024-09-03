@@ -6,6 +6,10 @@ import dayjs from 'dayjs';
 const HomeScreen = () => {
   const [date, setDate] = useState(dayjs());
 
+  const handleDate=(params)=>{
+      setDate(params.date);
+      console.log(params.date);
+    }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text><br/>
@@ -13,7 +17,7 @@ const HomeScreen = () => {
       <DateTimePicker
         mode="single"
         date={date}
-        onChange={(params) => {setDate(params.date);console.log(date);}}
+        onChange={(params)=>handleDate(params)}
       />
     </View>
   );
